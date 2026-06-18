@@ -1,0 +1,79 @@
+{
+  "name": "helix-launcher",
+  "version": "1.0.0",
+  "description": "Modern Minecraft launcher with multi-instance support",
+  "author": "Anon_",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit",
+    "postinstall": "node -e ''"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.6.0",
+    "react-router-dom": "^6.28.0",
+    "sql.js": "^1.14.1",
+    "uuid": "^10.0.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vite-plugin-electron": "^0.28.8",
+    "vite-plugin-electron-renderer": "^0.14.6"
+  },
+  "build": {
+    "appId": "com.helix.launcher",
+    "productName": "Helix Launcher",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "resources/**/*",
+      "src/assets/logo.png"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/logo.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Helix Launcher"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/logo.png",
+      "category": "public.app-category.games"
+    },
+    "dmg": {
+      "title": "Helix Launcher ${version}",
+      "background": null,
+      "contents": [
+        { "x": 130, "y": 220, "type": "file" },
+        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+      ]
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "src/assets/logo.png"
+    }
+  }
+}
