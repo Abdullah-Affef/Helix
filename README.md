@@ -1,6 +1,7 @@
 # Helix Launcher
 
-<img width="500" height="500" alt="logo" src="https://github.com/user-attachments/assets/33da9dd0-72ef-46c3-8ce1-ce5f743e8f55" />
+<img width="1586" height="992" alt="ChatGPT Image Jun 18, 2026, 10_06_04 PM" src="https://github.com/user-attachments/assets/b95958dd-e9ee-4a1f-bc89-72934d532b30" />
+
 
 ---
 
