@@ -56,6 +56,23 @@ declare global {
       platform: string
       onDownloadProgress: (callback: (data: { label: string; percent: number; bytesDownloaded: number; bytesTotal: number } | null) => void) => () => void
       onConsoleLog: (callback: (text: string) => void) => () => void
+      update: {
+        check: () => Promise<void>
+        download: () => Promise<void>
+        install: () => Promise<void>
+        onStatus: (callback: (status: UpdateStatus) => void) => () => void
+      }
     }
+  }
+
+  interface UpdateStatus {
+    type: 'checking' | 'available' | 'not-available' | 'downloading' | 'downloaded' | 'error'
+    version?: string
+    percent?: number
+    message?: string
+    releaseNotes?: string
+    bytesPerSecond?: number
+    transferred?: number
+    total?: number
   }
 }

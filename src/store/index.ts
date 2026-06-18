@@ -26,6 +26,17 @@ interface ConsoleLine {
   text: string
 }
 
+interface UpdateStatus {
+  type: 'checking' | 'available' | 'not-available' | 'downloading' | 'downloaded' | 'error'
+  version?: string
+  percent?: number
+  message?: string
+  releaseNotes?: string
+  bytesPerSecond?: number
+  transferred?: number
+  total?: number
+}
+
 interface DownloadProgress {
   label: string
   percent: number
@@ -42,6 +53,7 @@ interface AppState {
   logs: { instanceId: string; lines: string[] }[]
   consoleLines: ConsoleLine[]
   downloadProgress: DownloadProgress | null
+  updateStatus: UpdateStatus | null
 
   setInstances: (instances: Instance[]) => void
   setSelectedInstance: (instance: Instance | null) => void
@@ -52,6 +64,7 @@ interface AppState {
   clearLogs: (instanceId: string) => void
   addConsoleLine: (text: string) => void
   setDownloadProgress: (progress: DownloadProgress | null) => void
+  setUpdateStatus: (status: UpdateStatus | null) => void
   clearConsole: () => void
 }
 
@@ -64,6 +77,7 @@ export const useStore = create<AppState>((set) => ({
   logs: [],
   consoleLines: [],
   downloadProgress: null,
+  updateStatus: null,
 
   setInstances: (instances) => set({ instances }),
   setSelectedInstance: (instance) => set({ selectedInstance: instance }),
@@ -88,5 +102,6 @@ export const useStore = create<AppState>((set) => ({
       consoleLines: [...s.consoleLines, { timestamp: Date.now(), text }].slice(-200),
     })),
   setDownloadProgress: (progress) => set({ downloadProgress: progress }),
+  setUpdateStatus: (status) => set({ updateStatus: status }),
   clearConsole: () => set({ consoleLines: [] }),
 }))

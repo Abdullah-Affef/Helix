@@ -3,6 +3,7 @@ import path from 'path'
 import { registerIpcHandlers } from './ipc'
 import { initDatabase } from './core/database'
 import { isSetupCompleted, markSetupCompleted, setSetting } from './core/settings'
+import { initUpdater, checkForUpdates, downloadUpdate, quitAndInstall } from './core/updater'
 
 let mainWindow: BrowserWindow | null = null
 
@@ -39,6 +40,7 @@ app.whenReady().then(async () => {
   await initDatabase()
   registerIpcHandlers()
   createWindow()
+  initUpdater()
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -55,6 +57,18 @@ ipcMain.handle('setup:complete', (_event, launcherDir?: string, instancesDir?: s
   if (launcherDir) setSetting('launcherDir', launcherDir)
   if (instancesDir) setSetting('instancesDir', instancesDir)
   markSetupCompleted()
+})
+
+ipcMain.handle('update:check', () => {
+  checkForUpdates()
+})
+
+ipcMain.handle('update:download', () => {
+  downloadUpdate()
+})
+
+ipcMain.handle('update:install', () => {
+  quitAndInstall()
 })
 
 app.on('window-all-closed', () => {

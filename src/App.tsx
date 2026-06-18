@@ -16,6 +16,7 @@ export default function App() {
   const setAuth = useStore((s) => s.setAuth)
   const addConsoleLine = useStore((s) => s.addConsoleLine)
   const setDownloadProgress = useStore((s) => s.setDownloadProgress)
+  const setUpdateStatus = useStore((s) => s.setUpdateStatus)
   const [themeReady, setThemeReady] = useState(false)
   const [setupReady, setSetupReady] = useState(false)
   const [setupDone, setSetupDone] = useState(false)
@@ -36,10 +37,16 @@ export default function App() {
     const unsubConsole = window.api.onConsoleLog((text) => {
       addConsoleLine(text)
     })
+    const unsubUpdate = window.api.update.onStatus((status) => {
+      setUpdateStatus(status)
+    })
+
+    window.api.update.check()
 
     return () => {
       unsubProgress()
       unsubConsole()
+      unsubUpdate()
     }
   }, [])
 

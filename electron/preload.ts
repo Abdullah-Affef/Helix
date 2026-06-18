@@ -76,6 +76,16 @@ const api = {
     ipcRenderer.on('console:log', handler)
     return () => ipcRenderer.removeListener('console:log', handler)
   },
+  update: {
+    check: () => ipcRenderer.invoke('update:check'),
+    download: () => ipcRenderer.invoke('update:download'),
+    install: () => ipcRenderer.invoke('update:install'),
+    onStatus: (callback: (status: any) => void) => {
+      const handler = (_event: any, status: any) => callback(status)
+      ipcRenderer.on('update:status', handler)
+      return () => ipcRenderer.removeListener('update:status', handler)
+    },
+  },
 }
 
 contextBridge.exposeInMainWorld('api', api)
